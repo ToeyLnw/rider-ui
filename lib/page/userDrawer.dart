@@ -25,7 +25,7 @@ class _userDrawerWidgetState extends State<userDrawerWidget> {
   String url = "";
   late Future<void> loadData;
   late UserDataGetRes userDataGetRes;
-
+  
   @override
   void initState() {
     super.initState();

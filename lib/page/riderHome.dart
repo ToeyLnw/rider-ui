@@ -123,7 +123,7 @@ class _riderHomePageState extends State<riderHomePage> {
                         Column(
                           children: [
                             Image.network(
-                              'https://upload-os-bbs.hoyolab.com/upload/2024/05/07/248396272/879b0dac419413dbdb8edbc71f4b1355_2044136382544371185.png',
+                              'https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Orange_tabby_cat_sitting_on_fallen_leaves-Hisashi-01A.jpg/800px-Orange_tabby_cat_sitting_on_fallen_leaves-Hisashi-01A.jpg',
                               width: 90,
                             ),
                             Padding(

@@ -2,11 +2,13 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:call_your_rider/config/config.dart';
 import 'package:call_your_rider/model/response/order_get_res.dart';
+import 'package:call_your_rider/model/response/user_data_get_res.dart';
 import 'package:call_your_rider/page/appBar.dart';
-import 'package:call_your_rider/page/login.dart';
+import 'package:call_your_rider/page/details.dart';
 import 'package:call_your_rider/page/userDrawer.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:get/get.dart';
 
 class userReceiver extends StatefulWidget {
   final int idx;
@@ -18,6 +20,7 @@ class userReceiver extends StatefulWidget {
 
 class _userReceiverState extends State<userReceiver> {
   String url = "";
+  late UserDataGetRes userDataGetRes;
   late List<OrderGetRes> orderResponse = []; // ประกาศ orderGetRes เป็น List
   late Future<void> loadData;
 
@@ -57,25 +60,25 @@ class _userReceiverState extends State<userReceiver> {
                 if (orderResponse.isEmpty) {
                   // กรณีไม่มีสินค้า
                   return SizedBox(
+                    // เพิ่มการ return widget
                     width: MediaQuery.of(context).size.width * 0.7,
-                    child: Card(
+                    child: const Card(
                       elevation: 4,
                       child: Padding(
-                        padding: const EdgeInsets.all(16.0),
+                        padding: EdgeInsets.all(16.0),
                         child: Column(
                           children: [
-                            const Padding(
+                            Padding(
                               padding: EdgeInsets.all(8.0),
                               child: Text(
-                                "ยังไม่มีสินค้าส่งออก",
+                                "ยังไม่มีสินค้านำเข้า โปรดรอสินค้ามาส่ง",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.bold),
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
-                            FilledButton(
-                                onPressed: () {},
-                                child: const Text("ส่งของเลย!")),
                           ],
                         ),
                       ),
@@ -150,12 +153,12 @@ class _userReceiverState extends State<userReceiver> {
                                         ),
                                       ],
                                     ),
-                                    const Row(
+                                    Row(
                                       children: [
-                                        SizedBox(width: 35),
+                                        const SizedBox(width: 35),
                                         Expanded(
                                           child: Text(
-                                            "ร้าน: ร้านหมูตู้ ช็อป 310 ต.หนองพล อ.กิจณีย จ.มหาสารคราม",
+                                            order.origin ?? "",
                                             softWrap: true,
                                             overflow: TextOverflow.visible,
                                           ),
@@ -174,7 +177,10 @@ class _userReceiverState extends State<userReceiver> {
                                   Padding(
                                     padding: const EdgeInsets.only(top: 8.0),
                                     child: FilledButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        Get.to(
+                                            () => DetailsPage(idx: widget.idx, oid: order.oid,));
+                                      },
                                       child: const Text("ดูรายละเอียด"),
                                     ),
                                   ),
@@ -213,5 +219,10 @@ class _userReceiverState extends State<userReceiver> {
     } else {
       log('การร้องขอข้อมูลล้มเหลว: สถานะ HTTP ${res.statusCode}');
     }
+    res = await http.get(Uri.parse('$url/user/find/${widget.idx}'));
+
+    // Decode ข้อมูล string ที่ได้มา
+    var data = jsonDecode(res.body);
+    userDataGetRes = UserDataGetRes.fromJson(data[0]);
   }
 }

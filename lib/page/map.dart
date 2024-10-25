@@ -248,6 +248,7 @@ class _GPSandMapPageState extends State<GPSandMapPage>
       });
     }
   }
+
 }
 
 Future<Position> _determinePosition() async {

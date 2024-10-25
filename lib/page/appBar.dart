@@ -28,12 +28,12 @@ class _appBarWidgetState extends State<appBarWidget> {
                     'assets/image/SE_logo.png',
                     width: 200,
                   ),
-                  ClipOval(
-                    child: Image.network(
-                      'https://i.pinimg.com/736x/11/5e/b9/115eb9d1ff5a8d32c9000d3ec418d014.jpg',
-                      height: 70,
-                    ),
-                  ),
+                  // ClipOval(
+                  //   child: Image.network(
+                  //     'https://i.pinimg.com/736x/11/5e/b9/115eb9d1ff5a8d32c9000d3ec418d014.jpg',
+                  //     height: 70,
+                  //   ),
+                  // ),
                 ],
               ),
             ),
